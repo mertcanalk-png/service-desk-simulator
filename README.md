@@ -19,35 +19,45 @@ the next technician. This log is where I practise that discipline. Each entry
 records not only *what* fixed the issue but *why* it worked, and where my first
 instinct was wrong.
 
+## How I triage a ticket
+
+Every ticket follows the same repeatable loop:
+
+![Ticket triage flow](screenshots/servicedesk-triage-flow.svg)
+
+A recurring lesson across these tickets: **"it works now" is not the same as
+"I found why."** A reboot can mask a cause rather than fix it.
+
 ---
 
 ## Ticket log
 
-| # | Symptom | Root cause | Fix | Key lesson |
-|---|---|---|---|---|
-| 01 | Desktop completely dead, no power, no POST | Hardware failure (confirmed dead on a known-good outlet) | Replaced the unit and re-imaged via the imaging server; automated domain join | Confirm dead on a known-good outlet before declaring hardware failure — replace, don't repair |
-| 02 | Remote user can't reach the Marketing shared drive ("network path not found") | User was off the corporate network with no VPN tunnel | Connected the VPN client, verified the share path, remapped the drive | "Network path not found" for a remote user with working internet = missing VPN, not permissions |
-| 03 | Password stopped working after a 3-week absence | Password had expired while the user was away | Verified identity first, then reset with a temp password + force-change at next logon | Verify identity **before** any account action; expired-after-absence is routine, not a compromise |
-| 04 | Audio cuts out mid-call on a softphone | Unconfirmed — driver update + reboot cleared it | Updated the headset driver and rebooted | On VoIP, clean mid-call drop-outs point to network/jitter, not drivers; changing two things at once left the true cause unproven |
-| 05 | Email won't set up on new phone AND fails on workstation | Password issue (not "account disabled" — a distinct state) | Ran the runbook isolation step, verified identity, reset password with force-change | Isolate scope first (does it fail on other devices too?); match note wording to the actual account state |
-| 06 | Remote user's VPN won't reconnect | Unconfirmed — flushdns + reboot restored it | Ran `ipconfig /flushdns` and rebooted | `flushdns` clears the DNS resolver cache (not IPs, not a "VPN cache"); change one variable at a time so the cause is provable |
+| # | Category | Symptom | Root cause | Fix | Key lesson |
+|---|---|---|---|---|---|
+| 01 | Hardware | Desktop completely dead, no power, no POST | Hardware failure (confirmed dead on a known-good outlet) | Replaced the unit and re-imaged via the imaging server; automated domain join | Confirm dead on a known-good outlet before declaring hardware failure — replace, don't repair |
+| 02 | Network / Access | Remote user can't reach the Marketing shared drive ("network path not found") | User was off the corporate network with no VPN tunnel | Connected the VPN client, verified the share path, remapped the drive | "Network path not found" for a remote user with working internet = missing VPN, not permissions |
+| 03 | Identity / Access | Password stopped working after a 3-week absence | Password had expired while the user was away | Verified identity first, then reset with a temp password + force-change at next logon | Verify identity **before** any account action; expired-after-absence is routine, not a compromise |
+| 04 | Software / Network (VoIP) | Audio cuts out mid-call on a softphone | Unconfirmed — driver update + reboot cleared it | Updated the headset driver and rebooted | On VoIP, clean mid-call drop-outs point to network/jitter, not drivers; changing two things at once left the true cause unproven |
+| 05 | Email / Identity | Email won't set up on new phone AND fails on workstation | Password issue (not "account disabled" — a distinct state) | Ran the runbook isolation step, verified identity, reset password with force-change | Isolate scope first (does it fail on other devices too?); match note wording to the actual account state |
+| 06 | Network / Access | Remote user's VPN won't reconnect | Unconfirmed — flushdns + reboot restored it | Ran `ipconfig /flushdns` and rebooted | `flushdns` clears the DNS resolver cache (not IPs, not a "VPN cache"); change one variable at a time so the cause is provable |
 
 ---
 
-## How I work a ticket
+## The documentation loop
 
-Every ticket follows the same loop, which this log is designed to reinforce:
+Each ticket write-up in [`tickets/`](tickets/) uses the same five sections:
 
-1. **Read the full ticket** — scope and symptom before touching anything.
-2. **Isolate** — form a hypothesis about which component is responsible.
-3. **Verify identity** — mandatory before any account or security action.
-4. **Change one variable at a time** — test after each change.
-5. **Confirm the fix with the user.**
-6. **Document** — diagnosis → reason → action → verification → status, plus one
-   plain-language note for the user. Never record passwords.
+1. **Diagnosis** — how I isolated the cause.
+2. **Root cause** — what was actually wrong (honestly marked *unconfirmed* where
+   the cause wasn't proven).
+3. **Action taken** — what I did.
+4. **Verification** — how I confirmed it worked.
+5. **Status** — resolved / resolved-cause-unproven.
 
-A recurring lesson across these tickets: **"it works now" is not the same as
-"I found why."** A reboot can mask a cause rather than fix it.
+Plus a **Lesson learned** for each, because the reasoning is the point.
+
+Passwords are never recorded in notes. Identity is always verified before any
+account action.
 
 ---
 
