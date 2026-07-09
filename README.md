@@ -40,6 +40,7 @@ A recurring lesson across these tickets: **"it works now" is not the same as
 | 04 | Software / Network (VoIP) | Audio cuts out mid-call on a softphone | Unconfirmed — driver update + reboot cleared it | Updated the headset driver and rebooted | On VoIP, clean mid-call drop-outs point to network/jitter, not drivers; changing two things at once left the true cause unproven |
 | 05 | Email / Identity | Email won't set up on new phone AND fails on workstation | Password issue (not "account disabled" — a distinct state) | Ran the runbook isolation step, verified identity, reset password with force-change | Isolate scope first (does it fail on other devices too?); match note wording to the actual account state |
 | 06 | Network / Access | Remote user's VPN won't reconnect | Unconfirmed — flushdns + reboot restored it | Ran `ipconfig /flushdns` and rebooted | `flushdns` clears the DNS resolver cache (not IPs, not a "VPN cache"); change one variable at a time so the cause is provable |
+| 07 | Infrastructure / Print Services | All printers, every floor, offline at once (worked the previous evening) | Print services not running on the print server (server-down vs spooler-hung not separately confirmed) | Isolated to the print server, rebooted it, confirmed active, user verified printing restored | Simultaneous multi-site failure = shared dependency, not the endpoints; check whole-server-vs-spooler before rebooting |
 
 ---
 
