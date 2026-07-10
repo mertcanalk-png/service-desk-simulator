@@ -4,7 +4,7 @@
 
 | Field | Detail |
 |---|---|
-| Priority | Low |
+| Priority | Medium |
 | Category | Software / Cloud (with a security consideration) |
 | Reported symptom | Cloud Drive showing errors and files duplicating continuously. User reported recently installing unauthorised free software (a screen-saver downloaded from the internet) shortly before the problem began. |
 
