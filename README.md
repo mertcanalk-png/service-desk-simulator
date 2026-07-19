@@ -1,7 +1,7 @@
 # Help Desk — Ticket Practice Log
 
 A running log of help desk tickets I've worked through in a service desk
-simulator, documented the way a real Level 1 technician documents a ticket:
+simulator(https://servicedesk-simulator.com), documented the way a real Level 1 technician documents a ticket:
 symptom, diagnosis, root cause, fix, and the lesson learned.
 
 > **Scope note:** This is self-directed practice in a training simulator, done in
